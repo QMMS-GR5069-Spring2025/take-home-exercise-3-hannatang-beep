@@ -1,22 +1,39 @@
-# Homework #4: model building and tracking
+# Homework #4: Model Building and Tracking with MLflow
 
-**Instructions**: For this assignment, we’d like you to use the F1 Datasets we have been using for the class to build any ML model of your choice and track the model for each run using [**MLflow**](https://www.mlflow.org). Select any of the F1 datasets in AWS S3 to build your model. You are allowed to join multiple datasets.
+This assignment uses the F1 `results.csv` dataset from S3 to build a **Random Forest Regressor** that predicts `positionOrder` (final race position).  
+MLflow was used to track parameters, metrics, and artifacts across multiple model runs.
 
-1. [`20 pts`] Build any model of your choice with tunable hyperparameters
-2. [`20 pts`] Create an experiment setup where - for each run - you log:
-	* the hyperparameters used in the model
-	* the model itself
-	* every possible metric from the model you chose
-	* at least two artifacts (plots, or csv files)
-3. [`20 pts`] Track your MLFlow experiment and run at least 10 experiments with different parameters each
-4. [`20 pts`] Select your best model run and explain why
-5. [`20 pts`] As part of your GitHub classroom submission include screenshots of
-	* your MLFlow Homepage
+## Model Setup
 
-	![alt text](img/image-1.png)
+- Model used: `RandomForestRegressor` from `sklearn`
+- Target variable: `positionOrder`
+- Features used: `grid`, `laps`, `number`, `statusId`
+- Data source: `s3://columbia-gr5069-main/raw/results.csv`
+- Total runs: **10** experiments with different `max_depth` and `n_estimators`
 
-	* your detailed run page
+## 🔍 Best Model (Run 10)
 
-	![alt text](img/image-2.png)
+| Parameter      | Value  |
+|----------------|--------|
+| `max_depth`    | 12     |
+| `n_estimators` | 1000   |
+| `r2`           | **0.827** |
+| `mse`          | **10.24** |
+| `mae`          | **2.45** |
 
-	![alt text](img/image-3.png)
+**Why this model?**  
+It achieved the highest R² and lowest MSE/MAE among all runs, indicating best predictive performance.
+
+## 📸 MLflow Screenshots
+
+### 1. MLflow Experiment Overview (10 runs)
+
+![MLflow Experiment Overview](screenshots/mlflow_runs_overview.png)
+
+### 2. Best Run (Run 10) Details
+
+![Best Run Details](screenshots/mlflow_best_run_details.png)
+
+### 3. Artifacts (Feature importance & residual plot)
+
+![Artifacts View](screenshots/mlflow_artifacts_view.png)
